@@ -14,8 +14,13 @@ public class GameMapEditor : Editor
         GameMap map = (GameMap)target;
         int mapX = GameMap.mapX;
         int mapY = GameMap.mapY;
+
+        map.grid = EditorGUILayout.ObjectField("Grid Object", map.grid, typeof(GameObject), true) as GameObject;
+        map.units = EditorGUILayout.ObjectField("Units Object", map.units, typeof(GameObject), true) as GameObject;
         map.tilePrefab = EditorGUILayout.ObjectField("Tile Prefab", map.tilePrefab, typeof(GameObject), false) as GameObject;
 
+        if (map.grid == null)
+            return;
         EditorGUILayout.BeginHorizontal();
         for (int x = 0; x < mapX; x++)
         {
@@ -40,7 +45,6 @@ public class GameMapEditor : Editor
                 if (GUILayout.Button(map[x, y].ToString(), GUILayout.Width(25), GUILayout.Height(25)))
                 {
                     map.ToggleTile(x, y);
-                    map.UpdateMap();
                 }
             }
             EditorGUILayout.EndVertical();
@@ -50,19 +54,34 @@ public class GameMapEditor : Editor
 
         GUI.color = Color.white;
 
-        if (GUILayout.Button("Force Update"))
+        for (int x = 0; x < mapX; x++)
         {
-            map.UpdateMap();
-        }
+            for (int y = mapY - 1; y >= 0; y--)
+            {
+                switch (map[x, y])
+                {
+                    case TileType.A:
+                        string label = "Ally Prefab (" + x + "," + y + ")";
+                        Unit c = EditorGUILayout.ObjectField(label, map.GetInitialTileContent(x, y), typeof(Unit), false) as Unit;
+                        map.SetInitialTileContent(x, y, c);
+                        break;
+                }
 
+            }
+        }
         if (GUILayout.Button("Reset"))
         {
             map.ResetMap();
         }
 
-        if (GUILayout.Button("Force Clear"))
+        if (GUILayout.Button("Preview"))
         {
-            map.ClearMap();
+            map.PopulateGrid();
+        }
+
+        if (GUILayout.Button("Clear Preview"))
+        {
+            map.ClearGrid();
         }
     }
 }
