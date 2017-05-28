@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212715897233696924}
   - component: {fileID: 95130313377697594}
   - component: {fileID: 114351525245286714}
+  - component: {fileID: 114966939233472492}
   m_Layer: 0
   m_Name: TestUnit_0
   m_TagString: Untagged
@@ -70,7 +71,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62a1ac1fb7a12b469f43ba6adae918b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 3
+  alliance: 0
+  canObtainExp: 1
+  scaleStats: 1
+  initialLevel: 1
+  EXP_modifier: 1
+  initialMHP: 1
+  MHP_growthRate: 0
+  initialMMP: 1
+  MMP_growthRate: 0
+  initialATK: 0
+  ATK_growthRate: 0
+  initialDEF: 0
+  DEF_growthRate: 0
+  initialMAT: 0
+  MAT_growthRate: 0
+  initialAGI: 0
+  AGI_growthRate: 0
+  initialMOV: 2
+  MOV_growthRate: 0
+  stats: {fileID: 0}
+  moveTime: 0.25
+--- !u!114 &114966939233472492
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1174710014050772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4025331a96024fb4cb01ffeaebb3a70c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212715897233696924
 SpriteRenderer:
   m_ObjectHideFlags: 1

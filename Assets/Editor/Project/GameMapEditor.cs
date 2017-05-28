@@ -14,9 +14,8 @@ public class GameMapEditor : Editor
         GameMap map = (GameMap)target;
         int mapX = GameMap.mapX;
         int mapY = GameMap.mapY;
-
-        map.grid = EditorGUILayout.ObjectField("Grid Object", map.grid, typeof(GameObject), true) as GameObject;
-        map.units = EditorGUILayout.ObjectField("Units Object", map.units, typeof(GameObject), true) as GameObject;
+        
+        map.grid = EditorGUILayout.ObjectField("Grid Object", map.grid, typeof(Transform), true) as Transform;
         map.tilePrefab = EditorGUILayout.ObjectField("Tile Prefab", map.tilePrefab, typeof(GameObject), false) as GameObject;
 
         if (map.grid == null)

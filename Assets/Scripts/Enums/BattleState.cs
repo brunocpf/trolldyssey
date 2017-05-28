@@ -1,12 +1,11 @@
 ﻿public enum BattleState
 {
     Init,
-    PlayerSelectUnit,
-    PlayerMoveTarget,
-    PlayerMoveSequence,
-    PlayerTurnEnd,
-    EnemySelectUnit,
-    EnemyMoveTarget,
-    EnemyMoveSequence,
-    EnemyTurnEnd,
+    SelectUnit,
+    MoveTarget,
+    MoveSequence,
+    SelectAction,
+    SelectActionTarget,
+    ExecuteAction,
+    EndTurn,
 }

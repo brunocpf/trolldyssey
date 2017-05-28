@@ -10,13 +10,34 @@ public class Tile : MonoBehaviour
     [HideInInspector] public Tile prev;
     [HideInInspector] public int distance;
 
+    private void SetIndicatorColor(Transform indicator, Color color, float alpha)
+    {
+        Color c = new Color(color.r, color.g, color.b, alpha);
+        indicator.GetComponent<SpriteRenderer>().color = c;
+    }
 
     public void MarkForMovement()
     {
-        transform.Find("SelectionIndicator").gameObject.SetActive(true);
+        Transform selectionIndicator = transform.Find("SelectionIndicator");
+        selectionIndicator.gameObject.SetActive(true);
+        SetIndicatorColor(selectionIndicator, Constants.COLOR_MOVEMENT, 0.5f);
     }
 
-    public void UnmarkForMovement()
+    public void MarkForActionTarget()
+    {
+        Transform selectionIndicator = transform.Find("SelectionIndicator");
+        selectionIndicator.gameObject.SetActive(true);
+        SetIndicatorColor(selectionIndicator, Constants.COLOR_ACTION_TARGET, 0.5f);
+    }
+
+    public void MarkForAoe()
+    {
+        Transform selectionIndicator = transform.Find("SelectionIndicator");
+        selectionIndicator.gameObject.SetActive(true);
+        SetIndicatorColor(selectionIndicator, Constants.COLOR_AOE, 0.5f);
+    }
+
+    public void Unmark()
     {
         transform.Find("SelectionIndicator").gameObject.SetActive(false);
     }

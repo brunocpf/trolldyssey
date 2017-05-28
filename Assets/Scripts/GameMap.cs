@@ -22,9 +22,9 @@ public class GameMap : MonoBehaviour
     public static int mapX = 10;
     public static int mapY = 10;
 
-    public GameObject grid;
     public GameObject tilePrefab;
-    public GameObject units;
+    public Transform grid;
+    public Transform units;
 
     [SerializeField] private Unit[] initialContents = new Unit[mapX * mapY];
 
@@ -39,7 +39,6 @@ public class GameMap : MonoBehaviour
     {
         return initialContents[Get2DIndex(x, y)];
     }
-
 
     public void ToggleTile(int x, int y)
     {
@@ -65,13 +64,12 @@ public class GameMap : MonoBehaviour
                 mapArray[Get2DIndex(x, y)].tile = null;
         int n = 0;
         for (int i = 0; i < mapX; i++)
-            foreach (Transform child in grid.transform)
+            foreach (Transform child in grid)
             {
                 n++;
                 DestroyImmediate(child.gameObject);
             }
     }
-
 
     public void PopulateGrid()
     {
@@ -86,7 +84,7 @@ public class GameMap : MonoBehaviour
                     case TileType.X:
                         break;
                     default:
-                        GameObject instance = Instantiate(tilePrefab, grid.transform) as GameObject;
+                        GameObject instance = Instantiate(tilePrefab, grid) as GameObject;
                         mapArray[Get2DIndex(x, y)].tile = instance.GetComponent<Tile>();
                         mapArray[Get2DIndex(x, y)].tile.gridX = x;
                         mapArray[Get2DIndex(x, y)].tile.gridY = y;
@@ -106,7 +104,7 @@ public class GameMap : MonoBehaviour
                 Unit c = GetInitialTileContent(x, y);
                 if (c != null)
                 {
-                    GameObject instance = Instantiate(c.gameObject, units.transform) as GameObject;
+                    GameObject instance = Instantiate(c.gameObject, units) as GameObject;
                     instance.GetComponent<Unit>().Place(mapArray[Get2DIndex(x, y)].tile);
                     instance.GetComponent<Unit>().Match();
                 }
@@ -120,16 +118,30 @@ public class GameMap : MonoBehaviour
         {
             tiles[i].MarkForMovement();
         }
-            //tiles[i].GetComponent<Renderer>().material.SetColor("_Color", selectedTileColor);
+    }
+
+    public void MarkTilesForActionTarget(List<Tile> tiles)
+    {
+        for (int i = tiles.Count - 1; i >= 0; --i)
+        {
+            tiles[i].MarkForActionTarget();
+        }
+    }
+
+    public void MarkTilesForAoe(List<Tile> tiles)
+    {
+        for (int i = tiles.Count - 1; i >= 0; --i)
+        {
+            tiles[i].MarkForAoe();
+        }
     }
 
     public void UnmarkTiles(List<Tile> tiles)
     {
         for (int i = tiles.Count - 1; i >= 0; --i)
         {
-            tiles[i].UnmarkForMovement();
+            tiles[i].Unmark();
         }
-            //tiles[i].GetComponent<Renderer>().material.SetColor("_Color", defaultTileColor);
     }
 
     public List<Tile> Search(Tile start, Func<Tile, Tile, bool> addTile)
@@ -167,7 +179,7 @@ public class GameMap : MonoBehaviour
     }
 
 
-    private Tile GetTile(int x, int y)
+    public Tile GetTile(int x, int y)
     {
         if ((x < 0 || x >= mapX) || (y < 0 || y >= mapY))
             return null;
@@ -197,8 +209,10 @@ public class GameMap : MonoBehaviour
         return y * mapX + x;
     }
 
+
     void Awake()
     {
+        units = transform.Find("Units");
         PopulateGrid();
         SpawnIntialContent();
     }

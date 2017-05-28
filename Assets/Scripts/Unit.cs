@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
+[RequireComponent(typeof(Battler))]
 public class Unit : MonoBehaviour
 {
-    public int range = 3;
+
+    [HideInInspector] public Battler battler;
+
+    public int range { get { return battler.mov; } }
     public float moveTime = 0.25f;
     public Tile tile { get; protected set; }
-    private List<Tile> path;
 
     public void Place(Tile target)
     {
@@ -18,6 +21,12 @@ public class Unit : MonoBehaviour
         tile = target;
         if (target != null)
             target.content = this;
+    }
+
+    public Action SelectAction()
+    {
+        Action[] actions = GetComponentsInChildren<Action>();
+        return actions[0];
     }
 
     public void Match()
@@ -58,7 +67,6 @@ public class Unit : MonoBehaviour
         }
         for (int i = 1; i < targets.Count; ++i)
         {
-            Debug.Log(i);
             Tile from = targets[i - 1];
             Tile to = targets[i];
             yield return StartCoroutine(Walk(to));
@@ -72,5 +80,15 @@ public class Unit : MonoBehaviour
         yield return tweener.WaitForCompletion();
     }
 
-}
+    private void Awake()
+    {
+        battler = GetComponent<Battler>();
+        GameObject.Find("Popups Canvas").GetComponent<SceneHPGaugeController>().ShowHPGauge(this);
+    }
 
+    private void Start()
+    {
+        
+    }
+
+}

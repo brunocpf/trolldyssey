@@ -20,9 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4032400363994042}
   - component: {fileID: 212227400665251418}
-  - component: {fileID: 95865888698603180}
-  - component: {fileID: 114841490147166246}
   - component: {fileID: 61625278277358608}
+  - component: {fileID: 114841490147166246}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Tile
@@ -53,7 +52,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1248645829635354}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.5147243, y: 0.030862749, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4678835300210426}
@@ -98,23 +97,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!95 &95865888698603180
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1248645829635354}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 44bad224797abbc488b0aa7c6756e957, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114841490147166246
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -207,7 +189,7 @@ SpriteRenderer:
   m_Color: {r: 0, g: 0, b: 1, a: 0.3137255}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 0.16, y: 0.16}
+  m_DrawMode: 2
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
+  m_SpriteTileMode: 1
