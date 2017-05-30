@@ -9,17 +9,22 @@ public abstract class Action : MonoBehaviour
     public string actionDescription = "-";
     public Alliance targetAlliance = Alliance.None;
     public bool canTargetDead = false;
+    public bool requireTarget = true;
     public int baseNrgCost = 0;
     public Element element = Element.None;
     public ActionCoord[] range = ActionCoord.Adjacent();
     public bool canFlip = true;
 
-    public abstract bool IsUsable();
+    public virtual bool IsUsable()
+    {
+        return true;
+    }
 
     public virtual void Use(Unit user, List<Unit> targets)
     {
         foreach (Unit target in targets)
             ApplyEffects(user, target);
+        user.hasActedThisTurn = true;
     }
 
     public virtual void ApplyEffects(Unit user, Unit target)

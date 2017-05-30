@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battler: {fileID: 0}
-  moveTime: 0.2
+  moveTime: 0.3
 --- !u!212 &212129144603660036
 SpriteRenderer:
   m_ObjectHideFlags: 1

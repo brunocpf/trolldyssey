@@ -1,10 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public static class Constants {
 
     public static readonly Color COLOR_MOVEMENT = Color.blue;
     public static readonly Color COLOR_ACTION_TARGET = Color.red;
     public static readonly Color COLOR_AOE = Color.yellow;
+
+    public static readonly Color ALLY_COLOR = new Color(0.4f, 0.6f, 0.6f);
+    public static readonly Color ENEMY_COLOR = new Color(0.6f, 0.2f, 0.2f);
+    public static readonly Color NEUTRAL_COLOR = new Color(1.0f, 0.85f, 0.75f);
+
 
     public const int DEATH_STATE_ID = 0;
 
@@ -61,4 +67,16 @@ public static class Constants {
                                       MAX_MOV, // MOV
     };
 
+    public static Color GetAllianceColor(Alliance alliance)
+    {
+        switch (alliance)
+        {
+            case Alliance.Ally:
+                return ALLY_COLOR;
+            case Alliance.Enemy:
+                return ENEMY_COLOR;
+            default:
+                return NEUTRAL_COLOR;
+        }
+    }
 }

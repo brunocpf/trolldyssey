@@ -10,7 +10,7 @@ public class Selection : MonoBehaviour
     public int gridY = 0;
     public GameObject selectedTile = null;
 
-    public void CheckForNewTile(Tile tile)
+    public void UpdateSelection(Tile tile)
     {
         if (gridX != tile.gridX || gridY != tile.gridY)
         {

@@ -71,26 +71,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62a1ac1fb7a12b469f43ba6adae918b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alliance: 0
-  canObtainExp: 1
-  scaleStats: 1
-  initialLevel: 1
-  EXP_modifier: 1
-  initialMHP: 1
-  MHP_growthRate: 0
-  initialMMP: 1
-  MMP_growthRate: 0
-  initialATK: 0
-  ATK_growthRate: 0
-  initialDEF: 0
-  DEF_growthRate: 0
-  initialMAT: 0
-  MAT_growthRate: 0
-  initialAGI: 0
-  AGI_growthRate: 0
-  initialMOV: 2
-  MOV_growthRate: 0
-  stats: {fileID: 0}
+  cantActColor: {r: 1, g: 1, b: 1, a: 0.5}
+  battler: {fileID: 0}
   moveTime: 0.25
 --- !u!114 &114966939233472492
 MonoBehaviour:

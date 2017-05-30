@@ -33,6 +33,8 @@ public class Battler : MonoBehaviour
 
     public bool isMaxLevel { get { return level >= Constants.MAX_LEVEL; } }
 
+    public bool canMove = true;
+
     private string _name;
     private int _hp;
     private int _nrg;

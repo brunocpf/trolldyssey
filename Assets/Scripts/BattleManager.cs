@@ -1,18 +1,36 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
+    public static BattleManager instance = null;
+
     public Selection selection;
     public Alliance turnAlliance;
-    public Unit currentUnit;
     public Action currentAction;
+
+    private Tile origTile;
+    private List<Unit> targets;
     private List<Tile> tilesList;
     private List<Tile> aoeTiles;
 
-    [HideInInspector] public GameMap map;
+
+    public Unit currentUnit
+    {
+        get { return _currentUnit; }
+        set {
+            if (currentUnit != null)
+                currentUnit.UnsetCurrent();
+            _currentUnit = value;
+            if (currentUnit != null)
+                currentUnit.SetCurrent();
+        }
+    }
+    private Unit _currentUnit;
+
 
     public BattleState state
     {
@@ -28,24 +46,33 @@ public class BattleManager : MonoBehaviour
     }
     private BattleState _state;
 
+    public List<Unit> AllUnits(Alliance alliance)
+    {
+        return GameMap.instance.GetAllContent().Where(unit => (unit.battler.alliance & alliance) == unit.battler.alliance).ToList();
+    }
+
+    public List<Unit> MovableUnits(Alliance alliance)
+    {
+        return AllUnits(alliance).Where(unit => unit.canAct).ToList();
+    }
+
     private void OnStateExit(BattleState oldState, BattleState newState)
     {
         switch (oldState)
         {
             case BattleState.MoveTarget:
-                map.UnmarkTiles(tilesList);
+                GameMap.instance.UnmarkTiles(tilesList);
                 tilesList = null;
                 break;
             case BattleState.SelectActionTarget:
-                map.UnmarkTiles(tilesList);
-                map.UnmarkTiles(aoeTiles);
+                GameMap.instance.UnmarkTiles(tilesList);
+                GameMap.instance.UnmarkTiles(aoeTiles);
                 tilesList = null;
                 aoeTiles = null;
                 break;
             default:
                 break;
         }
-        
     }
 
     private void OnStateEnter(BattleState oldState, BattleState newState)
@@ -53,11 +80,22 @@ public class BattleManager : MonoBehaviour
         _state = newState;
         switch (newState)
         {
+            case BattleState.Init:
+                selection.UpdateSelection(GameMap.instance.GetAllySpawnLocations()[0]);
+                turnAlliance = Alliance.Ally;
+                state = BattleState.SelectUnit;
+                break;
+            case BattleState.SelectUnit:
+                currentUnit = null;
+                if (MovableUnits(turnAlliance).Count < 1)
+                    state = BattleState.EndTurn;
+                break;
             case BattleState.MoveTarget:
                 if (currentUnit != null)
                 {
-                    tilesList = currentUnit.GetTilesInRange(map);
-                    map.MarkTilesForMovement(tilesList);
+                    origTile = currentUnit.tile;
+                    tilesList = currentUnit.GetTilesInRange(GameMap.instance);
+                    GameMap.instance.MarkTilesForMovement(tilesList);
                 }
                 break;
             case BattleState.MoveSequence:
@@ -70,29 +108,42 @@ public class BattleManager : MonoBehaviour
             case BattleState.SelectActionTarget:
                 if (currentAction != null)
                 {
-                    tilesList = currentAction.GetTargetTiles(map, currentUnit.tile);
-                    map.MarkTilesForActionTarget(tilesList);
+                    tilesList = currentAction.GetTargetTiles(GameMap.instance, currentUnit.tile);
+                    GameMap.instance.MarkTilesForActionTarget(tilesList);
                 }
+                break;
+            case BattleState.ExecuteAction:
+                currentUnit.UnsetCurrent();
+                currentAction.Use(currentUnit, targets);
+                state = BattleState.SelectUnit;
+                break;
+            case BattleState.EndTurn:
+                List<Unit> units = AllUnits(turnAlliance);
+                foreach (Unit unit in units)
+                    unit.OnTurnEnd();
+                turnAlliance = (turnAlliance == Alliance.Ally) ? Alliance.Enemy : Alliance.Ally;
+                Debug.Log("Turn Ended!");
+                state = BattleState.SelectUnit;
                 break;
             default:
                 break;
         }
     }
 
-    public void OnMouseOverTile(Tile tile)
+    public void UpdateSelections(Tile tile)
     {
-        selection.CheckForNewTile(tile);
+        selection.UpdateSelection(tile);
         if (aoeTiles != null)
-            map.UnmarkTiles(aoeTiles);
+            GameMap.instance.UnmarkTiles(aoeTiles);
         aoeTiles = null;
         switch (state)
         {
             case BattleState.SelectActionTarget:
-                map.MarkTilesForActionTarget(tilesList);
-                aoeTiles = currentAction.GetAoeTiles(map, selection.selectedTile.GetComponent<Tile>(), currentUnit.tile);
+                GameMap.instance.MarkTilesForActionTarget(tilesList);
+                aoeTiles = currentAction.GetAoeTiles(GameMap.instance, selection.selectedTile.GetComponent<Tile>(), currentUnit.tile);
                 if (tilesList.Contains(selection.selectedTile.GetComponent<Tile>()))
                 {
-                    map.MarkTilesForAoe(aoeTiles);
+                    GameMap.instance.MarkTilesForAoe(aoeTiles);
                 }
                 break;
         }
@@ -108,11 +159,15 @@ public class BattleManager : MonoBehaviour
             case BattleState.SelectUnit:
                 if (t != null && t.content != null)
                 {
-                    if (t.content is Unit)
+                    if ((t.content.battler.alliance & turnAlliance) == t.content.battler.alliance && t.content.canAct) //t.content.battler.alliance == Alliance.Ally && t.content.canAct)
                     {
-                        currentUnit = t.content as Unit;
+                        currentUnit = t.content;
                         state = BattleState.MoveTarget;
                     }
+                }
+                else
+                {
+                    OpenActionMenu();
                 }
                 break;
             case BattleState.MoveTarget:
@@ -129,16 +184,18 @@ public class BattleManager : MonoBehaviour
                 {
                     if (tilesList.Contains(t))
                     {
-                        List<Unit> targets = currentAction.GetValidTargets(aoeTiles);
+                        targets = currentAction.GetValidTargets(aoeTiles);
                         if (targets.Count > 0)
-                        {
-                            currentAction.Use(currentUnit, targets);
-                            state = BattleState.SelectUnit;
-                        }
+                            state = BattleState.ExecuteAction;
                     }
                 }
                 break;
         }
+    }
+
+    private void OpenActionMenu()
+    {
+        throw new NotImplementedException();
     }
 
     public void OnCancel()
@@ -149,6 +206,8 @@ public class BattleManager : MonoBehaviour
                 state = BattleState.SelectUnit;
                 break;
             case BattleState.SelectActionTarget:
+                currentUnit.Place(origTile);
+                currentUnit.Match();
                 state = BattleState.SelectUnit;
                 break;
         }
@@ -163,12 +222,14 @@ public class BattleManager : MonoBehaviour
 
     private void Awake()
     {
-        map = GameObject.Find("Map").GetComponent<GameMap>();
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
     }
 
     private void Start()
     {
-        turnAlliance = Alliance.Ally;
-        state = BattleState.SelectUnit;
+        state = BattleState.Init;
     }
 }

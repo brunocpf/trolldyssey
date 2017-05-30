@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    public BattleManager battleManager;
 
     private void CheckMousePosition()
     {
@@ -14,7 +13,7 @@ public class InputManager : MonoBehaviour
         {
             if(hit.collider.gameObject.CompareTag("Tile"))
             {
-                battleManager.OnMouseOverTile(hit.collider.transform.GetComponent<Tile>());
+                BattleManager.instance.UpdateSelections(hit.collider.transform.GetComponent<Tile>());
             }
         }
     }
@@ -23,8 +22,8 @@ public class InputManager : MonoBehaviour
     {
         CheckMousePosition();
         if (Input.GetMouseButtonDown(0))
-            battleManager.OnFire();
+            BattleManager.instance.OnFire();
         else if (Input.GetMouseButtonDown(1))
-            battleManager.OnCancel();
+            BattleManager.instance.OnCancel();
     }
 }

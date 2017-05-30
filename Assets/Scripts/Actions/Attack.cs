@@ -12,6 +12,7 @@ public class Attack : Action
         actionDescription = "Ataque simples no alvo.";
         baseNrgCost = 0;
         canTargetDead = false;
+        requireTarget = true;
         element = Element.Physical;
         targetAlliance = Alliance.Ally | Alliance.Enemy;
         range = ActionCoord.Adjacent();

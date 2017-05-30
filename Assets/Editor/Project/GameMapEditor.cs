@@ -59,10 +59,10 @@ public class GameMapEditor : Editor
             {
                 switch (map[x, y])
                 {
-                    case TileType.A:
-                        string label = "Ally Prefab (" + x + "," + y + ")";
+                    case TileType.E:
+                        string label = "Enemy Unit (" + x + "," + y + ")";
                         Unit c = EditorGUILayout.ObjectField(label, map.GetInitialTileContent(x, y), typeof(Unit), false) as Unit;
-                        map.SetInitialTileContent(x, y, c);
+                        map.SetEnemySpawnLocation(x, y, c);
                         break;
                 }
 

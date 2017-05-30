@@ -6,6 +6,8 @@ using System;
 public class GameMap : MonoBehaviour
 {
 
+    public static GameMap instance = null;
+
     public TileType this[int i, int j]
     {
         get { return mapArray[Get2DIndex(i, j)].type; }
@@ -26,18 +28,18 @@ public class GameMap : MonoBehaviour
     public Transform grid;
     public Transform units;
 
-    [SerializeField] private Unit[] initialContents = new Unit[mapX * mapY];
+    [SerializeField] private Unit[] enemies = new Unit[mapX * mapY];
 
     [SerializeField] private GridTile[] mapArray = new GridTile[mapX * mapY];
     
-    public void SetInitialTileContent(int x, int y, Unit content)
+    public void SetEnemySpawnLocation(int x, int y, Unit content)
     {
-        initialContents[Get2DIndex(x, y)] = content;
+        enemies[Get2DIndex(x, y)] = content;
     }
 
     public Unit GetInitialTileContent(int x, int y)
     {
-        return initialContents[Get2DIndex(x, y)];
+        return enemies[Get2DIndex(x, y)];
     }
 
     public void ToggleTile(int x, int y)
@@ -52,7 +54,7 @@ public class GameMap : MonoBehaviour
             {
                 mapArray[Get2DIndex(x, y)].type = TileType.P;
                 mapArray[Get2DIndex(x, y)].tile = null;
-                initialContents[Get2DIndex(x, y)] = null;
+                enemies[Get2DIndex(x, y)] = null;
             }
     }
 
@@ -84,8 +86,8 @@ public class GameMap : MonoBehaviour
                     case TileType.X:
                         break;
                     default:
-                        GameObject instance = Instantiate(tilePrefab, grid) as GameObject;
-                        mapArray[Get2DIndex(x, y)].tile = instance.GetComponent<Tile>();
+                        GameObject tObject = Instantiate(tilePrefab, grid) as GameObject;
+                        mapArray[Get2DIndex(x, y)].tile = tObject.GetComponent<Tile>();
                         mapArray[Get2DIndex(x, y)].tile.gridX = x;
                         mapArray[Get2DIndex(x, y)].tile.gridY = y;
                         mapArray[Get2DIndex(x, y)].tile.gameObject.transform.localPosition = new Vector3(x, y, 0);
@@ -95,8 +97,52 @@ public class GameMap : MonoBehaviour
         }
     }
 
-    private void SpawnIntialContent()
+    private void SpawnAllies()
     {
+        List<Tile> allySpawnLocations = GetAllySpawnLocations();
+        for (int i = 0; i < Mathf.Min(allySpawnLocations.Count, GameManager.instance.partyMembers.Count); i++)
+        {
+            GameObject ally = GameManager.instance.partyMembers[i];
+            ally.SetActive(true);
+            SpawnUnit(allySpawnLocations[i], ally.GetComponent<Unit>());
+        }
+    }
+
+    public List<Tile> GetAllySpawnLocations()
+    {
+        List<Tile> locations = new List<Tile>();
+        for (int x = 0; x < mapX; x++)
+            for (int y = 0; y < mapY; y++)
+                if (this[x, y] == TileType.A)
+                    locations.Add(mapArray[Get2DIndex(x, y)].tile);
+        return locations;
+    }
+
+    private void SpawnEnemies()
+    {
+        for (int x = 0; x < mapX; x++)
+            for (int y = 0; y < mapY; y++)
+                if (this[x, y] == TileType.E)
+                    SpawnUnit(mapArray[Get2DIndex(x, y)].tile, enemies[Get2DIndex(x, y)], true);
+    }
+
+
+    private void SpawnUnit(Tile tile, Unit unit, bool instantiate = false)
+    {
+        if (tile == null || unit == null)
+            return;
+        if (instantiate)
+        {
+            GameObject uObject = Instantiate(unit.gameObject);
+            unit = uObject.GetComponent<Unit>();
+        }
+        unit.transform.SetParent(units, false);
+        unit.Place(tile);
+        unit.Match();
+    }
+
+
+    /*
         for (int x = 0; x < mapX; x++)
         {
             for (int y = 0; y < mapY; y++)
@@ -104,13 +150,13 @@ public class GameMap : MonoBehaviour
                 Unit c = GetInitialTileContent(x, y);
                 if (c != null)
                 {
-                    GameObject instance = Instantiate(c.gameObject, units) as GameObject;
-                    instance.GetComponent<Unit>().Place(mapArray[Get2DIndex(x, y)].tile);
-                    instance.GetComponent<Unit>().Match();
+                    GameObject cObject = Instantiate(c.gameObject, units) as GameObject;
+                    cObject.GetComponent<Unit>().Place(mapArray[Get2DIndex(x, y)].tile);
+                    cObject.GetComponent<Unit>().Match();
                 }
             }
         }
-    }
+    }*/
 
     public void MarkTilesForMovement(List<Tile> tiles)
     {
@@ -209,11 +255,28 @@ public class GameMap : MonoBehaviour
         return y * mapX + x;
     }
 
+    public List<Unit> GetAllContent()
+    {
+        List<Unit> contents = new List<Unit>();
+        foreach (GridTile gTile in mapArray)
+            if (gTile.tile != null && gTile.tile.content != null)
+                contents.Add(gTile.tile.content);
+        return contents;
+    }
 
     void Awake()
     {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
         units = transform.Find("Units");
+    }
+
+    private void Start()
+    {
         PopulateGrid();
-        SpawnIntialContent();
+        SpawnEnemies();
+        SpawnAllies();
     }
 }

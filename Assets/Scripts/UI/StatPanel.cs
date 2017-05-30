@@ -6,18 +6,14 @@ using DG.Tweening;
 using System;
 using TMPro;
 
-public class StatPanel : MonoBehaviour {
+public class StatPanel : MonoBehaviour
+{
 
     private Selection selection;
     private RectTransform rectTransform;
     private Unit selectedUnit;
     private bool right = true;
     private bool hidden = true;
-
-    private Vector2 rightMin = new Vector2(0.5f, 0.0f);
-    private Vector2 rightMax = new Vector2(1.0f, 0.3f);
-    private Vector2 leftMin = new Vector2(0.0f, 0.0f);
-    private Vector2 leftMax = new Vector2(0.5f, 0.3f);
 
     private float minHiddenY = -0.25f;
     private float maxHiddenY = 0.05f;
@@ -37,11 +33,14 @@ public class StatPanel : MonoBehaviour {
     private TextMeshProUGUI matValue;
     private TextMeshProUGUI agiValue;
     private TextMeshProUGUI movValue;
+    private Image image;
+
 
     private void Awake()
     {
-        selection = GameObject.Find("Selection").GetComponent<Selection>();
         rectTransform = GetComponent<RectTransform>();
+        image = GetComponent<Image>();
+        selection = GameObject.Find("Selection").GetComponent<Selection>();
         coordText = GameObject.Find("CoordText").GetComponent<Text>();
         nameText = GameObject.Find("NameText").GetComponent<Text>();
         atkValue = GameObject.Find("AtkValue").GetComponent<TextMeshProUGUI>();
@@ -52,13 +51,15 @@ public class StatPanel : MonoBehaviour {
         selectedUnit = null;
     }
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    void Start()
+    {
+        UpdateStats();
+    }
+
+
+    void Update()
+    {
         bool oldRight = right;
         bool oldHidden = hidden;
         if (selection == null || selection.selectedTile == null)
@@ -77,9 +78,16 @@ public class StatPanel : MonoBehaviour {
             right = false;
         else if (selection.gridX < 5 && !right)
             right = true;
+        UpdateColor(selectedUnit == null ? Alliance.None : selectedUnit.battler.alliance);
         if (right != oldRight || hidden != oldHidden)
             StartCoroutine("AdjustPosition");
-	}
+    }
+
+    private void UpdateColor(Alliance alliance)
+    {
+        Color color = Constants.GetAllianceColor(alliance);
+        image.color = new Color(color.r, color.g, color.b, 0.75f);
+    }
 
     private IEnumerator AdjustPosition()
     {
@@ -89,8 +97,7 @@ public class StatPanel : MonoBehaviour {
         rectTransform.DOAnchorMax(newMaxAnchor, 0.25f, false).SetEase(Ease.OutBack);
         yield return tweener.WaitForCompletion();
     }
-
-
+    
     private void UpdateStats()
     {
         if (selectedUnit == null)

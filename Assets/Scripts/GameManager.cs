@@ -29,7 +29,6 @@ public class GameManager : MonoBehaviour
     public bool AddPartyMember(GameObject member)
     {
         GameObject memberObject = Instantiate(member);
-        Unit memberUnit = memberObject.GetComponent<Unit>();
         DontDestroyOnLoad(memberObject);
         memberObject.SetActive(false);
         partyMembers.Add(memberObject);
