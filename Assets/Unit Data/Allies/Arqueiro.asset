@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battlerName: Arqueiro
   initialLevel: 1
-  initialStats: 64000000320000000200000001000000020000000500000003000000
+  initialStats: 2f000000320000000300000001000000020000000500000003000000
   growthRate:
   - 0.4
   - 0.5
@@ -24,4 +24,4 @@ MonoBehaviour:
   - 0.03
   learnings:
   - level: 1
-    action: {fileID: 1452533729902358, guid: cfb7ab60510dd2848a284bb36f9de22f, type: 2}
+    action: {fileID: 114902532301359828, guid: cfb7ab60510dd2848a284bb36f9de22f, type: 2}

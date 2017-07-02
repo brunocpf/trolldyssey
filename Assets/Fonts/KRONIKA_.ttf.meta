@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 88ce50734b163c240bcb63afe5720bf7
+timeCreated: 1498764394
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -1
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Kronika
+  fontNames:
+  - Kronika
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

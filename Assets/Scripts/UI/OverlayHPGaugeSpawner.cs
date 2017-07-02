@@ -17,7 +17,11 @@ public class OverlayHPGaugeSpawner : MonoBehaviour
     {
         foreach (KeyValuePair<GameObject, Unit> entry in hpGauges)
         {
-
+            if (entry.Value == null || entry.Value.gameObject == null || !entry.Value.gameObject.activeSelf)
+            {
+                entry.Key.SetActive(false);
+                continue;
+            }
             RectTransform rTransform = entry.Key.GetComponent<RectTransform>();
             Transform fill = rTransform.Find("HPFill");
             fill.GetComponent<Image>().fillAmount = entry.Value.battler.HpRate();

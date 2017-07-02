@@ -16,7 +16,7 @@ public class ActionMenuSpawner : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void SpawnMenu(Transform targetPosition, List<Action> actions)
+    public void SpawnMenu(Transform targetPosition, List<BaseAction> actions)
     {
         RadialMenu menu = Instantiate(radialMenuPrefab, transform);
         menu.transform.position = targetPosition.position;

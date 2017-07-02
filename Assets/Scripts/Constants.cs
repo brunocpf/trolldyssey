@@ -7,8 +7,8 @@ public static class Constants {
     public static readonly Color COLOR_ACTION_TARGET = Color.red;
     public static readonly Color COLOR_AOE = Color.yellow;
 
-    public static readonly Color ALLY_COLOR = new Color(0.4f, 0.6f, 0.6f);
-    public static readonly Color ENEMY_COLOR = new Color(0.6f, 0.2f, 0.2f);
+    public static readonly Color ALLY_COLOR = Color.blue;//new Color(0.4f, 0.6f, 0.6f);
+    public static readonly Color ENEMY_COLOR = Color.red;// new Color(0.6f, 0.2f, 0.2f);
     public static readonly Color NEUTRAL_COLOR = new Color(1.0f, 0.85f, 0.75f);
 
 

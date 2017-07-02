@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wait : Action
+public class Wait : BaseAction
 {
     public Wait()
     {
@@ -15,8 +15,9 @@ public class Wait : Action
         targetAlliance = Alliance.None;
     }
 
-    public override void Use(Unit user, List<Unit> targets)
+    public override IEnumerator Use(Unit user, List<Unit> targets)
     {
+        yield return new WaitForSeconds(1);
         user.hasActedThisTurn = true;
     }
 }

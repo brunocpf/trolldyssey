@@ -8,4 +8,6 @@
     SelectActionTarget,
     ExecuteAction,
     EndTurn,
+    GameOver,
+    Victory
 }

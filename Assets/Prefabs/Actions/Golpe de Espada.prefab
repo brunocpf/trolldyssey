@@ -55,6 +55,7 @@ MonoBehaviour:
   actionDescription: Ataque simples no alvo.
   targetAlliance: 3
   canTargetDead: 0
+  requireTarget: 1
   baseNrgCost: 0
   element: 1
   range:
@@ -67,6 +68,13 @@ MonoBehaviour:
   - x: 0
     y: 1
   canFlip: 1
+  basePower: 10
+  variance: 0.1
+  modifier: 0
+  ignoreDef: 0
+  canBeNegative: 0
+  instantiatedObject: {fileID: 1396769033720312, guid: be347c20686e6224383e4f8726628363,
+    type: 2}
   aoe:
   - x: 0
     y: 0

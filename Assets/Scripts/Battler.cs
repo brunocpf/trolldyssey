@@ -29,7 +29,7 @@ public class Battler : MonoBehaviour
     public int mov { get { return Param(StatType.MOV); } }
 
     public State[] states { get { return GetComponentsInChildren<State>(); } }
-    public Action[] learnedActions { get { return GetComponentsInChildren<Action>(); } }
+    public BaseAction[] learnedActions { get { return GetComponentsInChildren<BaseAction>(); } }
 
     public bool isMaxLevel { get { return level >= Constants.MAX_LEVEL; } }
 
@@ -40,10 +40,13 @@ public class Battler : MonoBehaviour
     private int _nrg;
     private int _level;
     private int _exp;
+    private Unit unit;
 
     public void DealDamage(int v)
     {
         _hp -= v;
+        DamagePopupSpawner.instance.CreatePopup(unit, v);
+        Refresh();
     }
 
     private int[] _paramsPlus = new int[(int)StatType.Count];
@@ -51,6 +54,7 @@ public class Battler : MonoBehaviour
 
     private void Awake()
     {
+        unit = GetComponent<Unit>();
         InitializeBattler();
     }
 
@@ -61,6 +65,7 @@ public class Battler : MonoBehaviour
         ClearStates();
         ClearParams();
         Setup();
+        Refresh();
     }
 
     private void Setup()
@@ -114,10 +119,9 @@ public class Battler : MonoBehaviour
         }
     }
 
-    public void LearnAction(GameObject actionObject)
+    public void LearnAction(BaseAction action)
     {
-        if (actionObject.GetComponent<Action>() != null)
-            Instantiate(actionObject, transform.Find("Actions"));
+        Instantiate(action.gameObject, transform.Find("Actions"));
     }
 
     private void ChangeExp(int value)
@@ -188,7 +192,7 @@ public class Battler : MonoBehaviour
         }
     }
 
-    void Die()
+    public void Die()
     {
         _hp = 0;
         OnDeathClearStates();
@@ -247,9 +251,13 @@ public class Battler : MonoBehaviour
     {
         _hp = Mathf.Clamp(_hp, 0, mhp);
         _nrg = Mathf.Clamp(_nrg, 0, mnrg);
+        if (IsDead())
+            GetComponent<Animator>().SetBool("dead", true);
+        else
+            GetComponent<Animator>().SetBool("dead", false);
     }
 
-    void RecoverAll()
+    public void RecoverAll()
     {
         ClearStates();
         _hp = mhp;
@@ -266,12 +274,13 @@ public class Battler : MonoBehaviour
         return mnrg > 0 ? nrg / mnrg : 0;
     }
 
-    bool IsDead()
+    public bool IsDead()
     {
+        return (hp <= 0);
         return IsDeathStateAffected();
     }
 
-    bool IsAlive()
+    public bool IsAlive()
     {
         return !IsDead();
     }
@@ -288,7 +297,7 @@ public class Battler : MonoBehaviour
 
     bool CanMove()
     {
-        return true;
+        return IsAlive();
     }
 
     void SortStates()

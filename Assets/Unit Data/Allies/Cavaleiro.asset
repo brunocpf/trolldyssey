@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battlerName: Cavaleiro
   initialLevel: 1
-  initialStats: 64000000140000000400000005000000010000000200000002000000
+  initialStats: 32000000140000000500000005000000010000000200000002000000
   growthRate:
   - 0.8
   - 0.3
@@ -24,4 +24,4 @@ MonoBehaviour:
   - 0
   learnings:
   - level: 1
-    action: {fileID: 1649989021233034, guid: 0a9d6bff6b533d64cb81f860cbe5865a, type: 2}
+    action: {fileID: 114313594833032750, guid: 0a9d6bff6b533d64cb81f860cbe5865a, type: 2}

@@ -6,6 +6,6 @@ using UnityEngine;
 public class Learning {
 
     [Range(Constants.MIN_LEVEL, Constants.MAX_LEVEL)] public int level = 1;
-    public GameObject action;
+    public BaseAction action;
 
 }

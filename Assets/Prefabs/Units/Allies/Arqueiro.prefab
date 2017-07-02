@@ -110,7 +110,7 @@ Animator:
   m_GameObject: {fileID: 1856644860699364}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2bdeadab17153524c800cdb79976a39a, type: 2}
+  m_Controller: {fileID: 9100000, guid: f6148b7a7d95a1d4490eab7ebdd84823, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -129,7 +129,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f62a1ac1fb7a12b469f43ba6adae918b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cantActColor: {r: 1, g: 1, b: 1, a: 0.5}
   battler: {fileID: 0}
+  isCurrent: 0
   moveTime: 0.2
 --- !u!114 &114748893439532716
 MonoBehaviour:
@@ -146,6 +148,7 @@ MonoBehaviour:
   canObtainExp: 1
   scaleInitialStats: 1
   alliance: 1
+  canMove: 1
 --- !u!212 &212343916325355598
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4367470091431832}
   - component: {fileID: 114705627359486536}
   m_Layer: 0
-  m_Name: "Explos\xE3o"
+  m_Name: Explosao
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55,7 +55,8 @@ MonoBehaviour:
   actionDescription: "Explode uma \xE1rea."
   targetAlliance: 3
   canTargetDead: 0
-  baseNrgCost: 20
+  requireTarget: 1
+  baseNrgCost: 0
   element: 2
   range:
   - x: -2
@@ -85,6 +86,14 @@ MonoBehaviour:
   - x: 2
     y: 0
   canFlip: 1
+  basePower: 8
+  baseMultiplier: 1
+  variance: 0.4
+  modifier: 2
+  ignoreDef: 0
+  canBeNegative: 0
+  instantiatedObject: {fileID: 1089153869413710, guid: 5f41274a9e852434f8b123c92e17598f,
+    type: 2}
   aoe:
   - x: -1
     y: -1

@@ -11,7 +11,7 @@ public class Unit : MonoBehaviour
 
     [HideInInspector] public Battler battler;
 
-    public bool canAct { get { return !hasActedThisTurn && battler.canMove; } }
+    public bool canAct { get { return !hasActedThisTurn && battler.canMove && gameObject.activeSelf; } }
     public bool hasActedThisTurn
     {
         get
@@ -57,6 +57,12 @@ public class Unit : MonoBehaviour
 
     public void Place(Tile target)
     {
+        if (target == null)
+        {
+            tile.content = null;
+            tile = null;
+            return;
+        }
         if (tile != null && tile.content == this)
             tile.content = null;
         tile = target;
@@ -64,9 +70,9 @@ public class Unit : MonoBehaviour
             target.content = this;
     }
 
-    public Action SelectAction()
+    public BaseAction SelectAction()
     {
-        Action[] actions = GetComponentsInChildren<Action>();
+        BaseAction[] actions = GetComponentsInChildren<BaseAction>();
         return actions[0];
     }
 
@@ -91,7 +97,7 @@ public class Unit : MonoBehaviour
 
     private bool ExpandSearch(Tile from, Tile to)
     {
-        if (to.content != null && (to.content.battler.alliance & battler.alliance) != to.content.battler.alliance)
+        if (to.content != null && !to.content.battler.alliance.IsSameAlliance(battler.alliance))
             return false;
 
         return (from.distance + 1) <= range;

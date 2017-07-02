@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 8cd8871de24e5be4eaae48aa6b6b363c
+timeCreated: 1498763361
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 24
+  forceTextureCase: -1
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Austie Bost Chunky Description
+  fontNames:
+  - Austie Bost Chunky Description
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 1
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

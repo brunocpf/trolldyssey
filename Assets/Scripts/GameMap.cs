@@ -100,11 +100,11 @@ public class GameMap : MonoBehaviour
     private void SpawnAllies()
     {
         List<Tile> allySpawnLocations = GetAllySpawnLocations();
-        for (int i = 0; i < Mathf.Min(allySpawnLocations.Count, GameManager.instance.partyMembers.Count); i++)
+        for (int i = 0; i < Mathf.Min(allySpawnLocations.Count, GameManager.instance.initialPartyMembers.Length); i++)
         {
-            GameObject ally = GameManager.instance.partyMembers[i];
-            ally.SetActive(true);
-            SpawnUnit(allySpawnLocations[i], ally.GetComponent<Unit>());
+            GameObject ally = GameManager.instance.initialPartyMembers[i];
+            //ally.SetActive(true);
+            SpawnUnit(allySpawnLocations[i], ally.GetComponent<Unit>(), true);
         }
     }
 
@@ -160,6 +160,8 @@ public class GameMap : MonoBehaviour
 
     public void MarkTilesForMovement(List<Tile> tiles)
     {
+        if (tiles == null)
+            return;
         for (int i = tiles.Count - 1; i >= 0; --i)
         {
             tiles[i].MarkForMovement();
@@ -168,6 +170,8 @@ public class GameMap : MonoBehaviour
 
     public void MarkTilesForActionTarget(List<Tile> tiles)
     {
+        if (tiles == null)
+            return;
         for (int i = tiles.Count - 1; i >= 0; --i)
         {
             tiles[i].MarkForActionTarget();
@@ -176,6 +180,8 @@ public class GameMap : MonoBehaviour
 
     public void MarkTilesForAoe(List<Tile> tiles)
     {
+        if (tiles == null)
+            return;
         for (int i = tiles.Count - 1; i >= 0; --i)
         {
             tiles[i].MarkForAoe();
@@ -184,6 +190,8 @@ public class GameMap : MonoBehaviour
 
     public void UnmarkTiles(List<Tile> tiles)
     {
+        if (tiles == null)
+            return;
         for (int i = tiles.Count - 1; i >= 0; --i)
         {
             tiles[i].Unmark();

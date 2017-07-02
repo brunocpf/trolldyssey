@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: dd3087a45f0f0b14083dfc2753d25f75
+timeCreated: 1498781306
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -1
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: monoMMM_5
+  fontNames:
+  - monoMMM_5
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 1
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

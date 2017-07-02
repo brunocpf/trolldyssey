@@ -4,4 +4,34 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Title Screen/TitleScreen.unity
+    guid: bce36374636e9974498002259225cfc7
+  - enabled: 0
+    path: Assets/Scenes/MapTest.unity
+    guid: eed0dfb48071f844eb6671ebe30dfb0a
+  - enabled: 0
+    path: Assets/Scenes/DebugMap.unity
+    guid: 5022eaed63a916043a892d91fa775fad
+  - enabled: 1
+    path: Assets/Scenes/Batalhas/B1.unity
+    guid: 953d6ad1cb7b5304a9750af8efeaa606
+  - enabled: 1
+    path: Assets/Scenes/Batalhas/B2.unity
+    guid: c324f67d97c660f4aa80d42ac53cdb92
+  - enabled: 1
+    path: Assets/Scenes/Batalhas/B3.unity
+    guid: 05b30be24f5aa9f46b6e1f1a5d923804
+  - enabled: 1
+    path: Assets/Scenes/Cutscenes/Intro.unity
+    guid: e268e972d02fed6458af623622466f0f
+  - enabled: 1
+    path: Assets/Scenes/Cutscenes/Scene1.unity
+    guid: a20d432726d8def40a49c8506c80180d
+  - enabled: 1
+    path: Assets/Scenes/Cutscenes/Scene2.unity
+    guid: ae5c4f63d069366408744bc7f6e40992
+  - enabled: 1
+    path: Assets/Scenes/Cutscenes/Scene3.unity
+    guid: ef337a0f9e435f84c99e82afbb87037b

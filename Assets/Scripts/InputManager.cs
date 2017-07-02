@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+    private bool canFire = true;
+    private bool canCancel = true;
 
     private void CheckMousePosition()
     {
@@ -11,19 +13,26 @@ public class InputManager : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);
         if (hit.collider != null)
         {
+            canFire = true;
             if(hit.collider.gameObject.CompareTag("Tile"))
             {
-                BattleManager.instance.UpdateSelections(hit.collider.transform.GetComponent<Tile>());
+                if (BattleManager.instance.canSelect)
+                    BattleManager.instance.UpdateSelections(hit.collider.transform.GetComponent<Tile>());
             }
+        }
+        else
+        {
+            canFire = false;
         }
     }
 
-    void Update()
+    private void Update()
     {
         CheckMousePosition();
-        if (Input.GetMouseButtonDown(0))
-            BattleManager.instance.OnFire();
-        else if (Input.GetMouseButtonDown(1))
-            BattleManager.instance.OnCancel();
+        if (Input.GetMouseButtonDown(0) && canFire)
+            EventManager.TriggerEvent("Fire");
+        else if (Input.GetMouseButtonDown(1) && canCancel)
+            EventManager.TriggerEvent("Cancel");
     }
+    
 }

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55a3cab7586ca5a4795e813f0b39e929, type: 3}
+  m_Name: Princesa
+  m_EditorClassIdentifier: 
+  battlerName: Princesa
+  initialLevel: 1
+  initialStats: 96000000140000000200000001000000070000000100000001000000
+  growthRate:
+  - 0.8
+  - 0.3
+  - 0.7
+  - 0.6
+  - 0.1
+  - 0.2
+  - 0
+  learnings:
+  - level: 1
+    action: {fileID: 114705627359486536, guid: ee28db823f8ef6940a13864f649178bc, type: 2}
