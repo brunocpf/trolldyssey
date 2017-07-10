@@ -1,7 +1,5 @@
-﻿# Trolldyssey - The MVP
-
-|   Membro  	|                  Contatos                                                                                         	|
-|:---------:	|:-----------------------------------------:                                                                        	|
-|  Antônio  	|                                                                                                                   	|
-|   Bruno   	| brunocpf@outlook.com <br> saintgalgo@gmail.com <br> Skype: saintgalgo <br> Discord: Gyl#2278 <br> Tel: 991802313 	|
-| Guilherme 	|                                                                                                                   	|
+﻿# Trolldyssey -- The MVP
+## Projeto Final de Desenvolvimento de Jogos Digitais
+##### Membros: Antonio, Bruno, Guilherme
+----------------------------------------------------------
+Executável (Windows) na pasta "build".

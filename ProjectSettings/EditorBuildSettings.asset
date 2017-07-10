@@ -8,6 +8,21 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Title Screen/TitleScreen.unity
     guid: bce36374636e9974498002259225cfc7
+  - enabled: 1
+    path: Assets/Scenes/Title Screen/Credits.unity
+    guid: 4ecc09c678835a741ab6ace65e07177d
+  - enabled: 1
+    path: Assets/Scenes/Cutscenes/Intro.unity
+    guid: e268e972d02fed6458af623622466f0f
+  - enabled: 1
+    path: Assets/Scenes/Cutscenes/Scene1.unity
+    guid: a20d432726d8def40a49c8506c80180d
+  - enabled: 1
+    path: Assets/Scenes/Cutscenes/Scene2.unity
+    guid: ae5c4f63d069366408744bc7f6e40992
+  - enabled: 1
+    path: Assets/Scenes/Cutscenes/Scene3.unity
+    guid: ef337a0f9e435f84c99e82afbb87037b
   - enabled: 0
     path: Assets/Scenes/MapTest.unity
     guid: eed0dfb48071f844eb6671ebe30dfb0a
@@ -23,15 +38,3 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Batalhas/B3.unity
     guid: 05b30be24f5aa9f46b6e1f1a5d923804
-  - enabled: 1
-    path: Assets/Scenes/Cutscenes/Intro.unity
-    guid: e268e972d02fed6458af623622466f0f
-  - enabled: 1
-    path: Assets/Scenes/Cutscenes/Scene1.unity
-    guid: a20d432726d8def40a49c8506c80180d
-  - enabled: 1
-    path: Assets/Scenes/Cutscenes/Scene2.unity
-    guid: ae5c4f63d069366408744bc7f6e40992
-  - enabled: 1
-    path: Assets/Scenes/Cutscenes/Scene3.unity
-    guid: ef337a0f9e435f84c99e82afbb87037b
